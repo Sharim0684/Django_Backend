@@ -1,0 +1,5 @@
+<form method="POST" action="/api/linkedin_api/token/">
+    {% csrf_token %}
+    <input type="text" name="code" placeholder="Authorization Code">
+    <button type="submit">Submit</button>
+</form>
