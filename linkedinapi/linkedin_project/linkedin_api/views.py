@@ -1,13 +1,26 @@
-
-
-
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
 from django.http import JsonResponse
 from rest_framework.views import APIView
+# Replace these with your actual LinkedIn credentials
+LINKEDIN_CLIENT_ID = "86embapip2hnsy"
+LINKEDIN_CLIENT_SECRET = "WPL_AP1.UzATRB3rCrM44AYA.4sGm2g=="
+REDIRECT_URI = "http://127.0.0.1:8000/api/linkedin_auth/callback/"
 from rest_framework.response import Response
 from rest_framework import status
 from django.conf import settings
 import requests
 from django.middleware.csrf import get_token
+from django.views.decorators.csrf import csrf_exempt
+
+
+
+
+
+CLIENT_ID = "86embapip2hnsy"
+CLIENT_SECRET = "WPL_AP1.UzATRB3rCrM44AYA.4sGm2g=="
+REDIRECT_URI = "http://localhost:8000/api/linkedin_api/callback/"
 
 class LinkedInAuthURL(APIView):
     def get(self, request):
@@ -93,9 +106,7 @@ class LinkedInPost(APIView):
 
 
 
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-import json
+
 
 # @csrf_exempt
 # def linkedin_token(request):
@@ -115,13 +126,7 @@ import json
 #     return JsonResponse({"error": "Invalid request"}, status=400)
 
 
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-import json
 
-CLIENT_ID = "86embapip2hnsy"
-CLIENT_SECRET = "WPL_AP1.UzATRB3rCrM44AYA.4sGm2g=="
-REDIRECT_URI = "http://localhost:8000/api/linkedin_api/callback/"
 
 @csrf_exempt
 def linkedin_token(request):
@@ -164,8 +169,7 @@ def get_csrf_token(request):
     return response
 
 
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+
 
 # @csrf_exempt 
 # def get_access_token(request):
@@ -174,11 +178,6 @@ from django.http import JsonResponse
 #     return JsonResponse({"error": "Invalid request"}, status=400)
 
 
-
-# Replace these with your actual LinkedIn credentials
-LINKEDIN_CLIENT_ID = "86embapip2hnsy"
-LINKEDIN_CLIENT_SECRET = "WPL_AP1.UzATRB3rCrM44AYA.4sGm2g=="
-REDIRECT_URI = "http://127.0.0.1:8000/api/linkedin_auth/callback/"
 
 
 
@@ -209,46 +208,3 @@ def get_access_token(request):
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
 
-
-
-# @csrf_exempt
-# def get_access_token(request):
-#     if request.method == "POST":
-#         try:
-#             data = json.loads(request.body)  # Parse JSON data from request
-
-#             # Extract required fields
-#             grant_type = data.get("grant_type")
-#             client_id = data.get("client_id")
-#             client_secret = data.get("client_secret")
-#             redirect_uri = data.get("redirect_uri")
-#             code = data.get("code")
-
-#             if not all([grant_type, client_id, client_secret, redirect_uri, code]):
-#                 return JsonResponse({"error": "Missing required parameters"}, status=400)
-
-#             # Step 1: Call LinkedIn API to get the access token
-#             linkedin_token_url = "https://www.linkedin.com/oauth/v2/accessToken"
-#             payload = {
-#                 "grant_type": grant_type,
-#                 "client_id": client_id,
-#                 "client_secret": client_secret,
-#                 "redirect_uri": redirect_uri,
-#                 "code": code
-#             }
-#             headers = {
-#                 "Content-Type": "application/x-www-form-urlencoded"
-#             }
-
-#             response = requests.post(linkedin_token_url, data=payload, headers=headers)
-            
-#             # Step 2: Parse LinkedIn Response
-#             if response.status_code == 200:
-#                 return JsonResponse(response.json(), status=200)
-#             else:
-#                 return JsonResponse({"error": "Failed to get access token", "details": response.json()}, status=response.status_code)
-
-#         except Exception as e:
-#             return JsonResponse({"error": str(e)}, status=400)
-
-#     return JsonResponse({"error": "Invalid request method"}, status=405)
